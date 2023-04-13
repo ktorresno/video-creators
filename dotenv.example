@@ -1,0 +1,8 @@
+NODE_ENV=development
+PORT=8000
+PG_DB=video_creators
+PG_USER=admin
+PG_PASSWORD=admin
+PG_HOST=localhost
+PG_DRIVER=postgres
+TEST_PG_DB=test_video_creators
