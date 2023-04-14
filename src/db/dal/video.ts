@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import { Video } from '../models'
 import { GetAllVideosFilters } from './types';
 import { VideoInput, VideoOuput } from '../models/Video';
+import NotFoundException from '../../exceptions/NotFoundException';
 
 export const create = async (playload: VideoInput): Promise<VideoOuput> => {
     const video = await Video.create(playload);    
@@ -23,35 +24,37 @@ export const findOrCreate = async (playload: VideoInput): Promise<VideoOuput> =>
 export const update = async (id: number, playload: Partial<VideoInput>): Promise<VideoOuput> => {
     const video = await Video.findByPk(id);
     if (!video) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new NotFoundException("Video", id.toString())
     }
     const updatedVideo = await video.update(playload);
     return updatedVideo;
 }
 
-export const updatePublishedFlag = async (id: number, isPublished: boolean): Promise<VideoOuput> => {
+export const updatePublishedFlag = async (id: number, playload: Partial<VideoInput>): Promise<VideoOuput> => {
     const video = await Video.findByPk(id);
     if (!video) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new NotFoundException("Video", id.toString());
     }
     const updatedVideo = await video.update(
-        { published: isPublished }, 
+        { published: playload.published }, 
         { where: {id} });
+    
     return updatedVideo;
 }
 
 export const getById = async (id: number): Promise<VideoOuput> => {
     const video = await Video.findByPk(id);
     if (!video) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new NotFoundException("Video", id.toString());
     }
     return video;
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {
+    const video = await Video.findByPk(id);
+    if (!video) {
+        throw new NotFoundException("Video", id.toString());
+    }
     const deletedVideoCount = await Video.destroy({
         where: {id}
     });
@@ -60,9 +63,9 @@ export const deleteById = async (id: number): Promise<boolean> => {
 
 export const getAll = async (filters?: GetAllVideosFilters): Promise<VideoOuput[]> => {
     return Video.findAll({
-        /*where: {
-            ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
-        },*/
+        where: {
+            published: true
+        },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     });
 }

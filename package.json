@@ -10,7 +10,7 @@
     "clean": "rm -rf node_modules dist",
     "reinstall": "npm run clean && npm install",
     "rebuild": "npm run reinstall && npm run build",
-    "rebuild-ts": "npm run clean-dist && npm run build",    
+    "rebuild-up": "npm run clean-dist && npm run build && docker compose up --build",    
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "test": "jest"
   },

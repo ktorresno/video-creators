@@ -7,8 +7,12 @@ export const create = async(payload: CreateVideoDTO): Promise<Video> => {
     return mapper.toVideo(await service.create(payload))
 }
 
-export const update = async (id: number, payload: UpdateVideoDTO): Promise<Video> => {
+export const update = async(id: number, payload: UpdateVideoDTO): Promise<Video> => {
     return mapper.toVideo(await service.update(id, payload))
+}
+
+export const updatePublishedFlag = async(id: number, payload: UpdateVideoDTO): Promise<Video> => {
+    return mapper.toVideo(await service.publishedFlag(id, payload))
 }
 
 export const getById = async (id: number): Promise<Video> => {
