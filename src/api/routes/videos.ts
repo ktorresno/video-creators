@@ -1,57 +1,121 @@
+import 'express-async-errors';
 import { Router, Request, Response, NextFunction } from 'express';
+import { UniqueConstraintError } from 'sequelize';
+import  HttpException, { HttpCode } from '../../exceptions/HttpException';
 
 import * as videoController from '../controllers/video';
 import { CreateVideoDTO, FilterVideosDTO, UpdateVideoDTO } from '../dto/video.dto';
+import NotFoundException from '../../exceptions/NotFoundException';
+import UniqueConstrainException from '../../exceptions/UniqueConstrainException';
 
 const videosRouter = Router();
 
 // get video by ID
 videosRouter.get('/:id', async(req: Request, res: Response, next: NextFunction) => {
+  const id = Number(req.params.id);
   try {
-    const id = Number(req.params.id);
     const result = await videoController.getById(id);
-    return res.status(200).send(result);
+
+    return res.status(HttpCode.OK).send(result);
   } catch(error) {
-    next(error);
-  }    
+    if (error == "Error\: not found") {
+      next(new NotFoundException("Video", id.toString()));
+    } else {
+      next(
+        new HttpException(
+            HttpCode.INTERNAL_SERVER_ERROR,
+            "" + error
+      ));
+    }
+  }
 });
 
 // update video
-videosRouter.put('/:id', async(req: Request, res: Response) => {
+videosRouter.put('/:id', async(req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
-  const payload:UpdateVideoDTO = req.body;
-  
-  const result = await videoController.update(id, payload);
+  try {
+    const payload:UpdateVideoDTO = req.body;
+    const result = await videoController.update(id, payload);
 
-  // TODO handle duplicate Error
-  return res.status(201).send(result);
+    return res.status(HttpCode.SAVED).send(result);
+  } catch(error) {
+
+    if (error instanceof UniqueConstraintError) {
+      next(
+        new UniqueConstrainException("Video", "url")
+      );
+    } else if (error == "Error\: not found") {
+      next(new NotFoundException("Video", id.toString()));
+    } else {
+      next(
+        new HttpException(
+            HttpCode.INTERNAL_SERVER_ERROR,
+            "" + error
+      ));
+    }
+  }
 });
 
-// delete video
-videosRouter.delete('/:id', async (req: Request, res: Response) => {
-  const id = Number(req.params.id)
-    
-    const result = await videoController.deleteById(id)
-    return res.status(204).send({
+// Delete a video by id
+videosRouter.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const id = Number(req.params.id);        
+  try {
+    const result = await videoController.deleteById(id);
+
+    return res.status(HttpCode.OK).send({
         success: result
-    })
+    });
+  } catch(error) {
+    if (error == "Error\: not found") {
+      next(new NotFoundException("Video", id.toString()));
+    } else {
+      next(
+      new HttpException(
+            HttpCode.INTERNAL_SERVER_ERROR,
+            ""+error));
+    }
+  }
 });
 
-// create video
-videosRouter.post('/', async (req: Request, res: Response) => {
-  const payload:CreateVideoDTO = req.body
+// Register new video url
+videosRouter.post('/', async(req: Request, res: Response, next: NextFunction) => {
+  try {
+    const payload:CreateVideoDTO = req.body;
+    const result = await videoController.create(payload);
 
-  const result = await videoController.create(payload)
-  // TODO handle duplicate Error
-  return res.status(200).send(result)
+    return res.status(HttpCode.SAVED).send(result)
+  } catch(error) {
+
+    if (error instanceof UniqueConstraintError) {
+      next(
+        new HttpException(
+              HttpCode.FORBIDDEN, 
+              "The url you are trying to save it's already registered."
+      ));
+    } else {
+      next(
+        new HttpException(
+              HttpCode.INTERNAL_SERVER_ERROR,
+              ""+error
+      ));
+    }
+  }
 });
 
 // Get all videos
-videosRouter.get('/', async (req: Request, res: Response) => {
-  const filters:FilterVideosDTO = req.query
+videosRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const filters:FilterVideosDTO = req.query;
+    const results = await videoController.getAll(filters);
 
-  const results = await videoController.getAll(filters)
-  return res.status(200).send(results)
-})
+    return res.status(HttpCode.OK).send(results);
+  } catch(error) {
+    next(
+      new HttpException(
+            HttpCode.INTERNAL_SERVER_ERROR,
+            ""+error
+    ));
+  }
+});
 
 export default videosRouter;

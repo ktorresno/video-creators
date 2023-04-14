@@ -6,8 +6,7 @@ import { GetAllVideosFilters } from './types';
 import { VideoInput, VideoOuput } from '../models/Video';
 
 export const create = async (playload: VideoInput): Promise<VideoOuput> => {
-    const video = await Video.create(playload);
-    
+    const video = await Video.create(playload);    
     return video;
 }
 
