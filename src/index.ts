@@ -1,8 +1,9 @@
 import express, { Application, Request, Response, NextFunction, ErrorRequestHandler, Errback } from 'express';
+import HttpException, { HttpCode } from './exceptions/HttpException';
 import routes from './api/routes';
 import dbInit from './db/init';
 import dotenv from 'dotenv';
-//import sequelizeConnection from './db/config';
+import './process';
 dotenv.config();
 
 const port = process.env.PORT;
@@ -35,12 +36,11 @@ export const get = () => {
   app.use('/api/v1', routes);
 
   // Error handling
-  /*app.use((error, req: Request, res: Response, next: NextFunction) => {
-    console.log(error);
-    const status = error.status || 500;
-    const message = error.message;
-    res.status(status).json({ message: message });
-  });*/
+  app.use((error: HttpException, req: Request, res: Response, next: NextFunction) => {
+    const status = error.status || HttpCode.INTERNAL_SERVER_ERROR;
+    const message = error.message || 'Something went wrong';
+    res.status(status).send({ status, message });
+  });
 
   return app;
 };
