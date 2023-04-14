@@ -10,6 +10,10 @@ export const update = (id: number, payload: Partial<VideoInput>): Promise<VideoO
     return videoDal.update(id, payload);
 }
 
+export const publishedFlag = (id: number, payload: Partial<VideoInput>): Promise<VideoOuput> => {
+    return videoDal.updatePublishedFlag(id, payload);
+}
+
 export const getById = (id: number): Promise<VideoOuput> => {
     return videoDal.getById(id);
 }
