@@ -21,7 +21,7 @@ class Video extends Model<VideoAttributes, VideoInput> implements VideoAttribute
     public url!: string;
     public published!: boolean;
     public description!: string;
-  
+
     // timestamps!
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -55,5 +55,5 @@ class Video extends Model<VideoAttributes, VideoInput> implements VideoAttribute
     sequelize: sequelizeConnection,
     paranoid: true // soft delete at the 'deletedAt' attribute, when invoking the destroy method.
   })
-  
+
   export default Video;
