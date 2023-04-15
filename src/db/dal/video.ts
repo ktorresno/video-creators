@@ -1,13 +1,11 @@
 // Data access layer (DAL)
-import { Op } from 'sequelize';
-
 import { Video } from '../models'
 import { GetAllVideosFilters } from './types';
 import { VideoInput, VideoOuput } from '../models/Video';
 import NotFoundException from '../../exceptions/NotFoundException';
 
 export const create = async (playload: VideoInput): Promise<VideoOuput> => {
-    const video = await Video.create(playload);    
+    const video = await Video.create(playload);
     return video;
 }
 
@@ -36,9 +34,9 @@ export const updatePublishedFlag = async (id: number, playload: Partial<VideoInp
         throw new NotFoundException("Video", id.toString());
     }
     const updatedVideo = await video.update(
-        { published: playload.published }, 
+        { published: playload.published },
         { where: {id} });
-    
+
     return updatedVideo;
 }
 

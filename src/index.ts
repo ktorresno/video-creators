@@ -2,14 +2,13 @@ import express, { Application, Request, Response, NextFunction, ErrorRequestHand
 import HttpException, { HttpCode } from './exceptions/HttpException';
 import routes from './api/routes';
 import dbInit from './db/init';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import './process';
-dotenv.config();
 
 const port = process.env.PORT;
 console.log('index.ts PORT: '+ port);
 
-export const get = () => { 
+export const get = () => {
   const app: Application = express();
 
   // Body parsing Middleware

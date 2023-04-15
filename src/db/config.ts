@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 import { Dialect, Sequelize } from 'sequelize';
 
 const isTest = process.env.NODE_ENV === 'test';
@@ -10,9 +10,9 @@ const dbPassword = process.env.PG_PASSWORD;
 const dbDriver = process.env.PG_DRIVER as Dialect;
 
 const sequelizeConnection = new Sequelize(
-    dbName, 
-    dbUser, 
-    dbPassword, 
+    dbName,
+    dbUser,
+    dbPassword,
     {
         host: dbHost,
         dialect: dbDriver,

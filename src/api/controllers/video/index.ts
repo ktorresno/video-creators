@@ -19,7 +19,7 @@ export const getById = async (id: number): Promise<Video> => {
     return mapper.toVideo(await service.getById(id))
 }
 
-export const deleteById = async(id: number): Promise<Boolean> => {
+export const deleteById = async(id: number): Promise<boolean> => {
     const isDeleted = await service.deleteById(id)
     return isDeleted
 }
