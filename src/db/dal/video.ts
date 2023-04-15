@@ -22,7 +22,7 @@ export const findOrCreate = async (playload: VideoInput): Promise<VideoOuput> =>
 export const update = async (id: number, playload: Partial<VideoInput>): Promise<VideoOuput> => {
     const video = await Video.findByPk(id);
     if (!video) {
-        throw new NotFoundException("Video", id.toString())
+        throw new NotFoundException("Video", id.toString());
     }
     const updatedVideo = await video.update(playload);
     return updatedVideo;
