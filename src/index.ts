@@ -6,7 +6,6 @@ import 'dotenv/config';
 import './process';
 
 const port = process.env.PORT;
-console.log('index.ts PORT: '+ port);
 
 export const get = () => {
   const app: Application = express();
