@@ -1,12 +1,12 @@
 import 'express-async-errors';
 import { Router, Request, Response, NextFunction } from 'express';
 import { UniqueConstraintError } from 'sequelize';
-import  HttpException, { HttpCode } from '../../exceptions/HttpException';
 
-import * as videoController from '../controllers/video';
-import { CreateVideoDTO, FilterVideosDTO, UpdateVideoDTO } from '../dto/video.dto';
+import  HttpException, { HttpCode } from '../../exceptions/HttpException';
 import NotFoundException from '../../exceptions/NotFoundException';
 import UniqueConstrainException from '../../exceptions/UniqueConstrainException';
+import { CreateVideoDTO, FilterVideosDTO, UpdateVideoDTO } from '../dto/video.dto';
+import * as videoController from '../controllers/video';
 
 const videosRouter = Router();
 
