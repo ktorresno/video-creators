@@ -61,12 +61,12 @@ videosRouter.put('/:id', async(req: Request, res: Response, next: NextFunction) 
 videosRouter.patch('/:id', async(req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
   try {
-    const playload:UpdateVideoDTO = req.body;
+    const payload:UpdateVideoDTO = req.body;
     // Validate that published flag is present in the request.
-    if (playload.published === undefined)
+    if (payload.published === undefined)
       next(new HttpException(HttpCode.BAD_REQUEST,'Missing [published] flag in the request.'));
 
-    const result = await videoController.updatePublishedFlag(id, playload);
+    const result = await videoController.updatePublishedFlag(id, payload);
 
     return res.status(HttpCode.SAVED).send(result);
   } catch(error) {

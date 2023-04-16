@@ -3,27 +3,27 @@ import { User } from "../models";
 import {UserInput, UserOuput} from '../models/User';
 
 // SignUp user
-export const register = async (playload: UserInput): Promise<UserOuput> => {
-    const usr = await User.create(playload);
+export const register = async (payload: UserInput): Promise<UserOuput> => {
+    const usr = await User.create(payload);
     return usr;
 };
 
-export const create = async (playload: UserInput): Promise<UserOuput> => {
+export const create = async (payload: UserInput): Promise<UserOuput> => {
     const [usr] = await User.findOrCreate({
         where: {
-            email: playload.email
+            email: payload.email
         },
-        defaults: playload
+        defaults: payload
     });
     return usr;
 };
 
-export const update = async (id: number, playload: Partial<UserInput>): Promise<UserOuput> => {
+export const update = async (id: number, payload: Partial<UserInput>): Promise<UserOuput> => {
     const user = await User.findByPk(id);
     if (!user) {
         throw new NotFoundException("User", id.toString());
     }
-    const updatedUideo = await user.update(playload);
+    const updatedUideo = await user.update(payload);
     return updatedUideo;
 };
 

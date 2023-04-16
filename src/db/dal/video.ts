@@ -4,37 +4,37 @@ import { GetAllVideosFilters } from './types';
 import { VideoInput, VideoOuput } from '../models/Video';
 import NotFoundException from '../../exceptions/NotFoundException';
 
-export const create = async (playload: VideoInput): Promise<VideoOuput> => {
-    const video = await Video.create(playload);
+export const create = async (payload: VideoInput): Promise<VideoOuput> => {
+    const video = await Video.create(payload);
     return video;
 }
 
-export const findOrCreate = async (playload: VideoInput): Promise<VideoOuput> => {
+export const findOrCreate = async (payload: VideoInput): Promise<VideoOuput> => {
     const [video] = await Video.findOrCreate({
         where: {
-            title: playload.title
+            title: payload.title
         },
-        defaults: playload
+        defaults: payload
     });
     return video;
 }
 
-export const update = async (id: number, playload: Partial<VideoInput>): Promise<VideoOuput> => {
+export const update = async (id: number, payload: Partial<VideoInput>): Promise<VideoOuput> => {
     const video = await Video.findByPk(id);
     if (!video) {
         throw new NotFoundException("Video", id.toString());
     }
-    const updatedVideo = await video.update(playload);
+    const updatedVideo = await video.update(payload);
     return updatedVideo;
 }
 
-export const updatePublishedFlag = async (id: number, playload: Partial<VideoInput>): Promise<VideoOuput> => {
+export const updatePublishedFlag = async (id: number, payload: Partial<VideoInput>): Promise<VideoOuput> => {
     const video = await Video.findByPk(id);
     if (!video) {
         throw new NotFoundException("Video", id.toString());
     }
     const updatedVideo = await video.update(
-        { published: playload.published },
+        { published: payload.published },
         { where: {id} });
 
     return updatedVideo;
