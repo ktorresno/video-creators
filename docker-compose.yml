@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.1'
 
 services:
   node_app:
@@ -15,6 +15,8 @@ services:
   node_db:
     container_name: node_db
     image: postgres:12
+    ports:
+      - '5432:5432'
     volumes:
       - node_db_data:/var/lib/postgresql/data
     env_file:
