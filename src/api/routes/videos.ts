@@ -17,7 +17,7 @@ videosRouter.get('/:id', async(req: Request, res: Response, next: NextFunction) 
     const result = await videoController.getById(id);
 
     return res.status(HttpCode.OK).send(result);
-  } catch(error) {
+  } catch(error){
     if (error == "Error\: not found") {
       next(new NotFoundException("Video", id.toString()));
     } else {
@@ -34,7 +34,7 @@ videosRouter.get('/:id', async(req: Request, res: Response, next: NextFunction) 
 videosRouter.put('/:id', async(req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
   try {
-    const payload:UpdateVideoDTO = req.body;
+    const payload: UpdateVideoDTO = req.body;
     const result = await videoController.update(id, payload);
 
     return res.status(HttpCode.SAVED).send(result);

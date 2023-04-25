@@ -1,6 +1,6 @@
 import NotFoundException from "../../exceptions/NotFoundException";
 import { User } from "../models";
-import {UserInput, UserOuput} from '../models/User';
+import {UserInput, UserOuput} from '../../api/interfaces';
 
 // SignUp user
 export const register = async (payload: UserInput): Promise<UserOuput> => {
