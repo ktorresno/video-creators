@@ -1,6 +1,18 @@
-import { Video } from "./video.interface";
-import { User } from "./user.interface";
+import { Video, VideoAttributes, VideoInput, VideoOuput } from "./video.interface";
+import { CreatorType, User, UserAttributes, UserInput, UserOuput } from "./user.interface";
 import { TokenData } from "./tokenData.interface";
 import { DataStoredInToken } from "./dataStoredInToken";
 
-export { Video, User, TokenData, DataStoredInToken };
+export {
+    Video,
+    VideoAttributes,
+    VideoInput,
+    VideoOuput,
+    CreatorType,
+    User,
+    UserAttributes,
+    UserInput,
+    UserOuput,
+    TokenData, 
+    DataStoredInToken
+};

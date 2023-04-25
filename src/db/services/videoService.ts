@@ -1,6 +1,6 @@
 import * as videoDal from '../dal/video';
-import {GetAllVideosFilters} from '../dal/types';
-import {VideoInput, VideoOuput} from '../models/Video';
+import { GetAllVideosFilters } from '../dal/types';
+import {VideoInput, VideoOuput} from '../../api/interfaces';
 
 export const create = (payload: VideoInput): Promise<VideoOuput> => {
     return videoDal.create(payload);
