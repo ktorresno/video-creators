@@ -9,27 +9,15 @@ const dbUser = process.env.PG_USER;
 const dbHost = process.env.PG_HOST;
 const dbPassword = process.env.PG_PASSWORD;
 const dbDriver = process.env.PG_DRIVER || 'postgres';
-const dbPort = 5432;
-
-export const development = {
-    database: dbName,
-    username: dbUser as string,
-    password: dbPassword,
-    // Defaults for Postgres
-    host: dbHost,
-    port: dbPort,
-    dialect: dbDriver as Dialect,
-    logging: false
-};
 
 const sequelizeConnection = new Sequelize(
-   development.database,
-   development.username,
-   development.password,
+   dbName,
+   dbUser as string,
+   dbPassword,
    {
-        host: development.host,
-        dialect: development.dialect,
-        logging: development.logging,
+        host: dbHost,
+        dialect: dbDriver as Dialect,
+        logging: false,
         dialectOptions: {
             multipleStatements: true
         }
