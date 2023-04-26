@@ -25,11 +25,13 @@ export const get = () => {
       return res.sendStatus(200);
     }
     */
-   next();
+    next();
   });
 
   app.get('/', async(req: Request, res: Response): Promise<Response> => {
-    return res.status(200).send({ message: `Welcome to the video creators API! \n Endpoints available at http://localhost:${port}/api/v1` });
+    return res.status(200).send({ 
+      message: `Welcome to the video creators API! \n 
+        Endpoints available at http://localhost:${port}/api/v1` });
   });
 
   app.use('/api/v1', routes);
@@ -53,7 +55,7 @@ export const start = () => {
       });
     });
   } catch (error) {
-    console.log(`Error occurred: ${error}`);
+    console.error(`Error occurred: ${error}`);
   }
 };
 

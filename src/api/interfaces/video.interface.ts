@@ -21,18 +21,19 @@ export interface VideoAttributes {
 };
 
 export interface VideoInput extends Optional<VideoAttributes, 'id'> {}
+
 export interface VideoOuput extends Required<VideoAttributes> {}
 
 export interface ILikeInteraction {
     id: number;
     creatorId: number;
     videoId: number;
-  }
-  
-  export interface LikeInteractionAttributes {
-    id: number;
-    creatorId: number;
-    videoId: number;
-  }
-  
-  export type LikeInteractionCreationAttributes = Optional<LikeInteractionAttributes, 'id'>;
+}
+
+export interface LikeInteractionAttributes {
+  id: number;
+  creatorId: number;
+  videoId: number;
+}
+
+export type LikeInteractionCreationAttributes = Optional<LikeInteractionAttributes, 'id'>;

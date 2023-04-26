@@ -8,14 +8,15 @@ export enum HttpCode {
   NOT_FOUND = 404,
   INTERNAL_SERVER_ERROR = 500,
 }
-class HttpException extends Error {
-    status: number;
-    message: string;
-    constructor(status: HttpCode, message: string) {
-      super(message);
-      this.status = status;
-      this.message = message;
-    }
-  }
 
-  export default HttpException;
+class HttpException extends Error {
+  status: number;
+  message: string;
+  constructor(status: HttpCode, message: string) {
+    super(message);
+    this.status = status;
+    this.message = message;
+  }
+}
+
+export default HttpException;

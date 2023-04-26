@@ -1,7 +1,6 @@
 'use strict'
 import { DataTypes } from 'sequelize';
 import { AllowNull, AutoIncrement, Column, Default, HasMany,
-   IsEmail,
    PrimaryKey, Table, Unique } from 'sequelize-typescript';
 import { CreatorType, UserInput, UserAttributes } from '../../api/interfaces';
 import { BaseModel } from './BaseModel';
@@ -39,6 +38,6 @@ class User extends BaseModel<UserAttributes, UserInput>
 
     @HasMany(() => Video)
     videos?: Video[];   
-  };
+};
 
-  export default User;
+export default User;

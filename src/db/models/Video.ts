@@ -36,6 +36,6 @@ class Video extends BaseModel<VideoAttributes, VideoInput>
 
     @BelongsTo(() => User, 'userId')
     user?: User;
-  }
+}
 
-  export default Video;
+export default Video;

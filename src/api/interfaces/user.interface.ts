@@ -24,7 +24,9 @@ export interface UserAttributes {
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
-  }
-  export interface UserInput extends Optional<UserAttributes, 'id'> {}
-  export interface UserOuput extends Required<UserAttributes> {}
+}
+
+export interface UserInput extends Optional<UserAttributes, 'id'> {}
+
+export interface UserOuput extends Required<UserAttributes> {}
   
