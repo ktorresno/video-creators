@@ -1,43 +1,48 @@
 'use strict'
-import { DataTypes } from 'sequelize';
-import { AllowNull, AutoIncrement, Column, Default, HasMany,
-   PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, Column, DataType, Default, HasMany, Table, Unique } from 'sequelize-typescript';
 import { CreatorType, UserInput, UserAttributes } from '../../api/interfaces';
 import { BaseModel } from './BaseModel';
+import FollowCreator from './FollowCreator';
+import LikedVideo from './LikedVideo';
 import Video from './Video';
 
 @Table
 class User extends BaseModel<UserAttributes, UserInput>
   implements UserAttributes {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataTypes.INTEGER)
-    id!: number;
 
-    @Column(DataTypes.STRING)
-    name!: string;
+  @Column(DataType.STRING)
+  name!: string;
 
-    @AllowNull(false)
-    @Unique
-    @Column(DataTypes.STRING)
-    email!: string;
+  @AllowNull(false)
+  @Unique
+  @Column(DataType.STRING)
+  email!: string;
 
-    @AllowNull(false)
-    @Column(DataTypes.STRING)
-    password!: string;
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  password!: string;
 
-    @Default(CreatorType.STUDENT)
-    @Column(DataTypes.ENUM(CreatorType.STUDENT, CreatorType.TEACHER))
-    creatorType!: CreatorType;
+  @Default(CreatorType.STUDENT)
+  @Column(DataType.ENUM(CreatorType.STUDENT, CreatorType.TEACHER))
+  creatorType!: CreatorType;
 
-    @Column(DataTypes.STRING)
-    photoUrl!: string;
+  @Column(DataType.STRING)
+  photoUrl!: string;
 
-    @Column(DataTypes.STRING)
-    cookie!: string;
+  @Column(DataType.STRING)
+  cookie!: string;
 
-    @HasMany(() => Video)
-    videos?: Video[];
+  @HasMany(() => Video, 'userId')
+  videos?: Video[];
+
+  @HasMany(() => FollowCreator, 'followerCreatorId')
+  followers?: FollowCreator[];
+
+  @HasMany(() => FollowCreator, 'followedCreatorId')
+  followed?: FollowCreator[];
+
+  @HasMany(() => LikedVideo, 'creatorId')
+  likedVideos?: LikedVideo[];
 };
 
 export default User;

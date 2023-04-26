@@ -5,7 +5,7 @@ export type CreateVideoDTO = {
     url: string;
     description?: string;
     published: boolean;
-    userId?: number;
+    userId: number;
 }
 
 export type UpdateVideoDTO = Optional<CreateVideoDTO, 'title'>
