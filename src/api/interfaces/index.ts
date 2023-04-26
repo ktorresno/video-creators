@@ -13,6 +13,6 @@ export {
     UserAttributes,
     UserInput,
     UserOuput,
-    TokenData, 
+    TokenData,
     DataStoredInToken
 };

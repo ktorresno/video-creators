@@ -13,10 +13,10 @@ class User extends BaseModel<UserAttributes, UserInput>
     @AutoIncrement
     @Column(DataTypes.INTEGER)
     id!: number;
-    
+
     @Column(DataTypes.STRING)
     name!: string;
-    
+
     @AllowNull(false)
     @Unique
     @Column(DataTypes.STRING)
@@ -29,7 +29,7 @@ class User extends BaseModel<UserAttributes, UserInput>
     @Default(CreatorType.STUDENT)
     @Column(DataTypes.ENUM(CreatorType.STUDENT, CreatorType.TEACHER))
     creatorType!: CreatorType;
-    
+
     @Column(DataTypes.STRING)
     photoUrl!: string;
 
@@ -37,7 +37,7 @@ class User extends BaseModel<UserAttributes, UserInput>
     cookie!: string;
 
     @HasMany(() => Video)
-    videos?: Video[];   
+    videos?: Video[];
 };
 
 export default User;

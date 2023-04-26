@@ -29,7 +29,7 @@ class Video extends BaseModel<VideoAttributes, VideoInput>
 
     @Column(DataTypes.TEXT)
     description!: string;
-    
+
     @ForeignKey(() => User)
     @Column(DataTypes.INTEGER)
     userId!: number;

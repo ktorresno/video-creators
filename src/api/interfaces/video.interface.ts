@@ -14,7 +14,7 @@ export interface VideoAttributes {
     url: string;
     description?: string;
     published?: boolean;
-    userId?: number;  
+    userId?: number;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
