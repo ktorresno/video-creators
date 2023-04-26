@@ -1,10 +1,16 @@
 import {
-    Model, Table, Column, CreatedAt, DeletedAt, UpdatedAt
+    Model, Table, Column, CreatedAt, DeletedAt, UpdatedAt, PrimaryKey, AutoIncrement, DataType
 } from 'sequelize-typescript';
 
 @Table
 export class BaseModel<TModelAttributes extends {} = any, TCreationAttributes extends {} = TModelAttributes>
-            extends Model<TModelAttributes, TCreationAttributes> {
+    extends Model<TModelAttributes, TCreationAttributes> {
+
+    @PrimaryKey
+    @AutoIncrement
+    @Column(DataType.INTEGER)
+    id!: number;
+
     // timestamps!
     @CreatedAt
     @Column

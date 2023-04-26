@@ -1,5 +1,5 @@
 import sequelizeConnection from './config';
-import { Video, User } from './models';
+import { Video, User, getModels } from './models';
 import { usersData } from './seeders/users'
 import { videosData } from './seeders/videos'
 
@@ -8,8 +8,6 @@ export const dbInit = async() => {
   sequelizeConnection.sync({ force: true })
     .then(() => populateTables());
 };
-
-const getModels = () => [User, Video];
 
 const populateTables = () => {
    createUsers();

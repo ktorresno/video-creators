@@ -7,35 +7,31 @@ import User from './User';
 
 @Table
 class Video extends BaseModel<VideoAttributes, VideoInput>
- implements VideoAttributes {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataTypes.INTEGER)
-    id!: number;
+   implements VideoAttributes {
 
-    @AllowNull(false)
-    @Column(DataTypes.STRING)
-    title!: string;
+   @AllowNull(false)
+   @Column(DataTypes.STRING)
+   title!: string;
 
-    @IsUrl
-    @AllowNull(false)
-    @Unique
-    @Column(DataTypes.STRING)
-    url!: string;
+   @IsUrl
+   @AllowNull(false)
+   @Unique
+   @Column(DataTypes.STRING)
+   url!: string;
 
-    @Default(false)
-    @Column(DataTypes.BOOLEAN)
-    published!: boolean;
+   @Default(false)
+   @Column(DataTypes.BOOLEAN)
+   published!: boolean;
 
-    @Column(DataTypes.TEXT)
-    description!: string;
+   @Column(DataTypes.TEXT)
+   description!: string;
 
-    @ForeignKey(() => User)
-    @Column(DataTypes.INTEGER)
-    userId!: number;
+   @ForeignKey(() => User)
+   @Column(DataTypes.INTEGER)
+   userId!: number;
 
-    @BelongsTo(() => User, 'userId')
-    user?: User;
+   @BelongsTo(() => User, 'userId')
+   user?: User;
 }
 
 export default Video;
