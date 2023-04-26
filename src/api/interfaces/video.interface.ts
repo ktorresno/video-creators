@@ -8,32 +8,22 @@ export interface Video {
     userId: number;
 };
 
-export interface VideoAttributes {
-    id: number;
-    title: string;
-    url: string;
-    description?: string;
-    published?: boolean;
-    userId?: number;
+export interface VideoAttributes extends Video {
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
 };
 
-export interface VideoInput extends Optional<VideoAttributes, 'id'> {}
+export interface VideoInput extends Optional<VideoAttributes, 'id'> {};
 
-export interface VideoOuput extends Required<VideoAttributes> {}
+export interface VideoOuput extends Required<VideoAttributes> {};
 
-export interface ILikeInteraction {
+export interface LikeInteraction {
     id: number;
     creatorId: number;
     videoId: number;
-}
+};
 
-export interface LikeInteractionAttributes {
-  id: number;
-  creatorId: number;
-  videoId: number;
-}
+export interface LikeInteractionAttributes extends LikeInteraction {};
 
-export type LikeInteractionCreationAttributes = Optional<LikeInteractionAttributes, 'id'>;
+export type LikeInteractionInput = Optional<LikeInteractionAttributes, 'id'>;
