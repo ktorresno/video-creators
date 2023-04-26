@@ -3,7 +3,7 @@ import { Optional } from "sequelize";
 export enum CreatorType {
     STUDENT = "Student",
     TEACHER = "Teacher",
-}
+};
 export interface User {
     id: number;
     name?: string;
@@ -13,19 +13,22 @@ export interface User {
     cookie?: string;
     creatorType?: CreatorType;
 };
-export interface UserAttributes {
-    id: number;
-    name?: string;
-    password: string;
-    email: string;
-    creatorType?: CreatorType;
-    photoUrl?: string;
-    cookie?: string;
+export interface UserAttributes extends User {
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
-}
+};
 
-export interface UserInput extends Optional<UserAttributes, 'id'> {}
+export interface UserInput extends Optional<UserAttributes, 'id'> {};
 
-export interface UserOuput extends Required<UserAttributes> {}
+export interface UserOuput extends Required<UserAttributes> {};
+
+export interface FollowCreator {
+    id: number;
+    followedCreatorId: number;
+    followerCreatorId: number;
+};
+
+export interface FollowCreatorAttributes extends FollowCreator {};
+
+export type FollowCreatorInput = Optional<FollowCreatorAttributes, 'id'>;

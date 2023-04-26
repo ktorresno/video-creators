@@ -1,18 +1,28 @@
-import { Video, VideoAttributes, VideoInput, VideoOuput } from "./video.interface";
-import { CreatorType, User, UserAttributes, UserInput, UserOuput } from "./user.interface";
+import { Video, VideoAttributes, VideoInput, VideoOuput,
+    LikeInteraction, LikeInteractionAttributes, LikeInteractionInput,
+} from "./video.interface";
+import { CreatorType, User, UserAttributes, UserInput, UserOuput,
+    FollowCreator, FollowCreatorAttributes, FollowCreatorInput
+ } from "./user.interface";
 import { TokenData } from "./tokenData.interface";
 import { DataStoredInToken } from "./dataStoredInToken";
 
 export {
-    Video,
-    VideoAttributes,
-    VideoInput,
-    VideoOuput,
-    CreatorType,
     User,
     UserAttributes,
     UserInput,
     UserOuput,
     TokenData,
-    DataStoredInToken
+    DataStoredInToken,
+    CreatorType,
+    Video,
+    VideoAttributes,
+    VideoInput,
+    VideoOuput,
+    LikeInteraction,
+    LikeInteractionAttributes,
+    LikeInteractionInput,
+    FollowCreator,
+    FollowCreatorAttributes,
+    FollowCreatorInput
 };
