@@ -10,11 +10,11 @@ const authRouter = Router();
 
 authRouter.post('/', async(req: Request, res: Response, next: NextFunction) => {
     try {
-        const payload:CreateUserDTO = req.body;
+        const payload: CreateUserDTO = req.body;
         const result = await userController.register(payload);
 
         return res.status(HttpCode.SAVED).send(result)
-    } catch(error) {
+    } catch (error) {
 
         if (error instanceof UniqueConstraintError)
         next(new UniqueConstrainException("SignUp", "email"));
@@ -24,7 +24,8 @@ authRouter.post('/', async(req: Request, res: Response, next: NextFunction) => {
         next(
             new HttpException(
                 HttpCode.INTERNAL_SERVER_ERROR,
-                ""+error));
+                "" + error
+            ));
     }
 });
 

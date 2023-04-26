@@ -1,5 +1,4 @@
-import { User } from '../../interfaces';
-import { UserOuput } from '../../../db/models/User';
+import { User, UserOuput } from '../../interfaces';
 
 export const toUser = (user: UserOuput): User => {
     return {
@@ -9,9 +8,6 @@ export const toUser = (user: UserOuput): User => {
         password: user.password,
         photoUrl: user.photoUrl,
         cookie: user.cookie,
-        creatorType: user.creatorType,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        deletedAt: user.deletedAt,
+        creatorType: user.creatorType
     };
 }

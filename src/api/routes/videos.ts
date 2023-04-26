@@ -17,7 +17,7 @@ videosRouter.get('/:id', async(req: Request, res: Response, next: NextFunction) 
     const result = await videoController.getById(id);
 
     return res.status(HttpCode.OK).send(result);
-  } catch(error) {
+  } catch (error) {
     if (error == "Error\: not found") {
       next(new NotFoundException("Video", id.toString()));
     } else {
@@ -34,21 +34,19 @@ videosRouter.get('/:id', async(req: Request, res: Response, next: NextFunction) 
 videosRouter.put('/:id', async(req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
   try {
-    const payload:UpdateVideoDTO = req.body;
+    const payload: UpdateVideoDTO = req.body;
     const result = await videoController.update(id, payload);
 
     return res.status(HttpCode.SAVED).send(result);
-  } catch(error) {
+  } catch (error) {
 
     if (error instanceof UniqueConstraintError) {
       next(
         new UniqueConstrainException("Video", "url")
       );
     } else if (error instanceof HttpException || error instanceof NotFoundException) {
-      console.log("Error is n¡instance of httpException");
       next(error);
     } else {
-      console.log("Error is not instance of");
       next(
         new HttpException(
             HttpCode.INTERNAL_SERVER_ERROR,
@@ -61,15 +59,15 @@ videosRouter.put('/:id', async(req: Request, res: Response, next: NextFunction) 
 videosRouter.patch('/:id', async(req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);
   try {
-    const payload:UpdateVideoDTO = req.body;
+    const payload: UpdateVideoDTO = req.body;
     // Validate that published flag is present in the request.
     if (payload.published === undefined)
-      next(new HttpException(HttpCode.BAD_REQUEST,'Missing [published] flag in the request.'));
+      next(new HttpException(HttpCode.BAD_REQUEST, 'Missing [published] flag in the request.'));
 
     const result = await videoController.updatePublishedFlag(id, payload);
 
     return res.status(HttpCode.SAVED).send(result);
-  } catch(error) {
+  } catch (error) {
     if (error instanceof UniqueConstraintError)
       next(new UniqueConstrainException("Video", "url"));
     else if (error instanceof HttpException) // Controlled Exceptions
@@ -78,18 +76,19 @@ videosRouter.patch('/:id', async(req: Request, res: Response, next: NextFunction
       next(
         new HttpException(
               HttpCode.INTERNAL_SERVER_ERROR,
-              ""+error));
+              "" + error
+      ));
   }
 });
 
 // Register new video url
 videosRouter.post('/', async(req: Request, res: Response, next: NextFunction) => {
   try {
-    const payload:CreateVideoDTO = req.body;
+    const payload: CreateVideoDTO = req.body;
     const result = await videoController.create(payload);
 
     return res.status(HttpCode.SAVED).send(result)
-  } catch(error) {
+  } catch (error) {
 
     if (error instanceof UniqueConstraintError)
       next(new UniqueConstrainException("Video", "url"));
@@ -99,22 +98,23 @@ videosRouter.post('/', async(req: Request, res: Response, next: NextFunction) =>
       next(
         new HttpException(
               HttpCode.INTERNAL_SERVER_ERROR,
-              ""+error));
+              "" + error
+      ));
   }
 });
 
 // Get all videos
 videosRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const filters:FilterVideosDTO = req.query;
+    const filters: FilterVideosDTO = req.query;
     const results = await videoController.getAll(filters);
 
     return res.status(HttpCode.OK).send(results);
-  } catch(error) {
+  } catch (error) {
     next(
       new HttpException(
             HttpCode.INTERNAL_SERVER_ERROR,
-            ""+error
+            "" + error
     ));
   }
 });
@@ -128,14 +128,15 @@ videosRouter.delete('/:id', async (req: Request, res: Response, next: NextFuncti
     return res.status(HttpCode.OK).send({
         success: result
     });
-  } catch(error) {
+  } catch (error) {
     if (error == "Error\: not found") {
       next(new NotFoundException("Video", id.toString()));
     } else {
       next(
       new HttpException(
             HttpCode.INTERNAL_SERVER_ERROR,
-            ""+error));
+            "" + error
+      ));
     }
   }
 });

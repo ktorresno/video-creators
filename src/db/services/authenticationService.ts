@@ -3,9 +3,8 @@ import 'dotenv/config';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import * as userDal from '../dal/user';
-import { DataStoredInToken, TokenData } from '../../api/interfaces';
+import { DataStoredInToken, TokenData, UserInput, UserOuput } from '../../api/interfaces';
 import UserWithThatEmailAlreadyExistsException from '../../exceptions/UserWithThatEmailAlreadyExistsException';
-import User, { UserInput, UserOuput } from '../models/User';
 
 export const register = async(userData: UserInput): Promise<UserOuput> => {
     if (await userDal.emailRegistered(userData.email))

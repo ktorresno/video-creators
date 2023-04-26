@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.1'
 
 services:
   node_app:
@@ -10,15 +10,23 @@ services:
     env_file:
       - docker.env
     depends_on:
-      - node_db
+      node_db:
+        condition: service_healthy
 
   node_db:
     container_name: node_db
     image: postgres:12
+    ports:
+      - '5432:5432'
     volumes:
       - node_db_data:/var/lib/postgresql/data
     env_file:
       - docker.env
+    healthcheck:
+        test: ["CMD-SHELL", "sh -c 'pg_isready -U ${PG_USER} -d ${PG_DB}'"]
+        interval: 2s
+        timeout: 3s
+        retries: 3
 
 volumes:
   node_db_data: {}

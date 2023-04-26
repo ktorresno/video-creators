@@ -6,8 +6,8 @@ export const checkEmail = (str: string) => str && isEmail(str);
 export const checkCredentials = (data: LogInDto) => {
     // let flag = true;
     const errors = {
-        email:'',
-        password:'',
+        email: '',
+        password: '',
         password_confirmation: ''
     };
 };

@@ -1,5 +1,4 @@
-import { Video } from '../../interfaces';
-import { VideoOuput } from '../../../db/models/Video';
+import { Video, VideoOuput } from '../../interfaces';
 
 export const toVideo = (video: VideoOuput): Video => {
     return {
@@ -8,8 +7,6 @@ export const toVideo = (video: VideoOuput): Video => {
         url: video.url,
         description: video.description,
         published: video.published,
-        createdAt: video.createdAt,
-        updatedAt: video.updatedAt,
-        deletedAt: video.deletedAt,
+        userId: video.userId
     };
 }

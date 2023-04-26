@@ -1,12 +1,29 @@
-import 'dotenv/config';
+import sequelizeConnection from './config';
 import { Video, User } from './models';
+import { usersData } from './seeders/users'
+import { videosData } from './seeders/videos'
 
-const isDev = process.env.NODE_ENV === 'development';
-const isTest = process.env.NODE_ENV === 'test';
+export const dbInit = async() => {
+  await sequelizeConnection.addModels(getModels());
+  sequelizeConnection.sync({ force: true })
+    .then(() => populateTables());
+};
 
-const dbInit = async() => {
-    await Video.sync({ alter: isDev || isTest });
-    await User.sync({ alter: isDev || isTest });
-}
+const getModels = () => [User, Video];
 
-export default dbInit;
+const populateTables = () => {
+   createUsers();
+   createVideos();
+};
+
+const createUsers = () => {
+  usersData.map(async(user) => {
+    await User.create(user)
+  });
+};
+
+const createVideos = () => {
+  videosData.map(async(video) => {
+    await Video.create(video)
+  });
+};

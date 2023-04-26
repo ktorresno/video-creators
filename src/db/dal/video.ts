@@ -1,7 +1,7 @@
 // Data access layer (DAL)
 import { Video } from '../models'
 import { GetAllVideosFilters } from './types';
-import { VideoInput, VideoOuput } from '../models/Video';
+import { VideoInput, VideoOuput } from '../../api/interfaces';
 import NotFoundException from '../../exceptions/NotFoundException';
 
 export const create = async (payload: VideoInput): Promise<VideoOuput> => {

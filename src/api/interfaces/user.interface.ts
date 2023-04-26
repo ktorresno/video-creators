@@ -1,8 +1,9 @@
-export enum CreatorType {
-    STUDENT = 1,
-    TEACHER = 2,
-}
+import { Optional } from "sequelize";
 
+export enum CreatorType {
+    STUDENT = "Student",
+    TEACHER = "Teacher",
+}
 export interface User {
     id: number;
     name?: string;
@@ -11,7 +12,20 @@ export interface User {
     photoUrl?: string;
     cookie?: string;
     creatorType?: CreatorType;
+};
+export interface UserAttributes {
+    id: number;
+    name?: string;
+    password: string;
+    email: string;
+    creatorType?: CreatorType;
+    photoUrl?: string;
+    cookie?: string;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
-};
+}
+
+export interface UserInput extends Optional<UserAttributes, 'id'> {}
+
+export interface UserOuput extends Required<UserAttributes> {}

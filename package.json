@@ -10,7 +10,7 @@
     "clean": "rm -rf node_modules dist",
     "reinstall": "npm run clean && npm install",
     "rebuild": "npm run reinstall && npm run build",
-    "rebuild-up": "npm run clean-dist && npm run build && docker compose up --build",
+    "rebuild-up": "npm run clean-dist && docker compose up --build",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "lint": "tslint -p . -c tslint.json",
     "test": "jest"
@@ -55,6 +55,7 @@
     "@types/validator": "^13.7.14",
     "concurrently": "^8.0.1",
     "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.0",
     "typescript": "^5.0.4"
   }
 }

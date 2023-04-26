@@ -1,68 +1,43 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import { CreatorType } from '../../api/interfaces/user.interface';
-import sequelizeConnection from '../config';
+'use strict'
+import { DataTypes } from 'sequelize';
+import { AllowNull, AutoIncrement, Column, Default, HasMany,
+   PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { CreatorType, UserInput, UserAttributes } from '../../api/interfaces';
+import { BaseModel } from './BaseModel';
+import Video from './Video';
 
-interface UserAttributes {
-  id: number;
-  name?: string;
-  password: string;
-  email: string;
-  creatorType?: CreatorType;
-  photoUrl?: string;
-  cookie?: string;
+@Table
+class User extends BaseModel<UserAttributes, UserInput>
+  implements UserAttributes {
+    @PrimaryKey
+    @AutoIncrement
+    @Column(DataTypes.INTEGER)
+    id!: number;
 
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
-}
-export interface UserInput extends Optional<UserAttributes, 'id'> {}
-export interface UserOuput extends Required<UserAttributes> {}
+    @Column(DataTypes.STRING)
+    name!: string;
 
+    @AllowNull(false)
+    @Unique
+    @Column(DataTypes.STRING)
+    email!: string;
 
-class User extends Model<UserAttributes, UserInput> implements UserAttributes {
-    public id!: number;
-    public name!: string;
-    public email!: string;
-    public password!: string;
-    public creatorType!: CreatorType;
-    public photoUrl!: string;
-    public cookie!: string;
+    @AllowNull(false)
+    @Column(DataTypes.STRING)
+    password!: string;
 
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
-  }
+    @Default(CreatorType.STUDENT)
+    @Column(DataTypes.ENUM(CreatorType.STUDENT, CreatorType.TEACHER))
+    creatorType!: CreatorType;
 
-  User.init({
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    photoUrl: {
-        type: DataTypes.STRING
-    },
-    creatorType: {
-        type: DataTypes.INTEGER,
-        defaultValue: CreatorType.STUDENT
-    }
-  }, {
-    timestamps: true,
-    sequelize: sequelizeConnection,
-    paranoid: true // soft delete at the 'deletedAt' attribute, when invoking the destroy method.
-  })
+    @Column(DataTypes.STRING)
+    photoUrl!: string;
 
-  export default User;
+    @Column(DataTypes.STRING)
+    cookie!: string;
+
+    @HasMany(() => Video)
+    videos?: Video[];
+};
+
+export default User;

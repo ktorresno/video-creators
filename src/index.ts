@@ -1,9 +1,9 @@
-import express, { Application, Request, Response, NextFunction, ErrorRequestHandler, Errback } from 'express';
-import HttpException, { HttpCode } from './exceptions/HttpException';
-import routes from './api/routes';
-import dbInit from './db/init';
 import 'dotenv/config';
 import './process';
+import routes from './api/routes';
+import express, { Application, Request, Response, NextFunction } from 'express';
+import HttpException, { HttpCode } from './exceptions/HttpException';
+import { dbInit } from './db/init';
 
 const port = process.env.PORT;
 
@@ -19,16 +19,21 @@ export const get = () => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH');
     /*
-      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-      if (req.method === "OPTIONS") {
-        return res.sendStatus(200);
-      }
+    res.setHeader("Access-Control-Expose-Headers", "x-total-count");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(200);
+    }
     */
     next();
   });
 
   app.get('/', async(req: Request, res: Response): Promise<Response> => {
-    return res.status(200).send({ message: `Welcome to the video creators API! \n Endpoints available at http://localhost:${port}/api/v1` });
+    return res
+            .status(200)
+            .send({
+              message: `Welcome to the video creators API! \n
+              Endpoints available at http://localhost:${port}/api/v1`});
   });
 
   app.use('/api/v1', routes);
@@ -43,15 +48,16 @@ export const get = () => {
   return app;
 };
 
-export const start = async() => {
+export const start = () => {
   const app = get();
   try {
-    await dbInit();
-    app.listen(port, () => {
-      console.log(`[server]: Server is running at http://localhost:${port}`);
+    dbInit().then(() => {
+      app.listen(port, () => {
+        console.log(`[server]: Server is running at http://localhost:${port}`);
+      });
     });
   } catch (error) {
-    console.log(`Error occurred: ${error}`);
+    console.error(`Error occurred: ${error}`);
   }
 };
 
