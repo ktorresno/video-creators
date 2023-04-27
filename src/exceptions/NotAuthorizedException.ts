@@ -2,7 +2,7 @@ import HttpException, { HttpCode } from './HttpException';
 
 class NotAuthorizedException extends HttpException {
   constructor() {
-    super(HttpCode.FORBIDDEN, "You're not authorized");
+    super(HttpCode.FORBIDDEN, "You're not authorized.");
   }
 }
 
