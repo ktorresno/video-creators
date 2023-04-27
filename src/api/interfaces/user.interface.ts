@@ -1,3 +1,4 @@
+import { Interface } from "readline";
 import { Optional } from "sequelize";
 
 export enum CreatorType {
@@ -27,11 +28,11 @@ export interface FollowCreator {
     id: number;
     followedCreatorId: number;
     followerCreatorId: number;
-    active: boolean;
+    active?: boolean;
 };
 
 export interface FollowCreatorAttributes extends FollowCreator {};
 
-export type FollowCreatorInput = Optional<FollowCreatorAttributes, 'id' | 'active'>;
+export interface FollowCreatorInput extends Optional<FollowCreatorAttributes, 'id' | 'active'> {};
 
-export type FollowCreatorOutput = Required<FollowCreatorAttributes>;
+export interface FollowCreatorOutput extends Required<FollowCreatorAttributes> {};
