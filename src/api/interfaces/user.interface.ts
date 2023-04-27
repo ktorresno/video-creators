@@ -27,8 +27,11 @@ export interface FollowCreator {
     id: number;
     followedCreatorId: number;
     followerCreatorId: number;
+    active: boolean;
 };
 
 export interface FollowCreatorAttributes extends FollowCreator {};
 
-export type FollowCreatorInput = Optional<FollowCreatorAttributes, 'id'>;
+export type FollowCreatorInput = Optional<FollowCreatorAttributes, 'id' | 'active'>;
+
+export type FollowCreatorOutput = Required<FollowCreatorAttributes>;

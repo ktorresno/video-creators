@@ -2,7 +2,8 @@ import { Video, VideoAttributes, VideoInput, VideoOuput,
     LikeInteraction, LikeInteractionAttributes, LikeInteractionInput,
 } from "./video.interface";
 import { CreatorType, User, UserAttributes, UserInput, UserOuput,
-    FollowCreator, FollowCreatorAttributes, FollowCreatorInput
+    FollowCreator, FollowCreatorAttributes, FollowCreatorInput,
+    FollowCreatorOutput
  } from "./user.interface";
 import { TokenData } from "./tokenData.interface";
 import { DataStoredInToken } from "./dataStoredInToken";
@@ -24,5 +25,6 @@ export {
     LikeInteractionInput,
     FollowCreator,
     FollowCreatorAttributes,
-    FollowCreatorInput
+    FollowCreatorInput,
+    FollowCreatorOutput
 };

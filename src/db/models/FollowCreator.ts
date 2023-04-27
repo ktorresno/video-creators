@@ -8,6 +8,12 @@ import User from "./User";
 class FollowCreator extends BaseModel<FollowCreatorAttributes, FollowCreatorInput>
     implements FollowCreatorAttributes {
 
+        @Column({
+            type: DataType.BOOLEAN,
+            defaultValue: true
+        })
+        active!: boolean;
+
         @ForeignKey(() => User)
         @Column({
             type: DataType.INTEGER,
