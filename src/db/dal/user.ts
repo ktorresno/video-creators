@@ -1,6 +1,6 @@
 import NotFoundException from "../../exceptions/NotFoundException";
 import { User } from "../models";
-import {UserInput, UserOuput} from '../../api/interfaces';
+import { UserInput, UserOuput } from '../../api/interfaces';
 
 // SignUp user
 export const register = async (payload: UserInput): Promise<UserOuput> => {
@@ -34,12 +34,11 @@ export const getById = async (id: number): Promise<UserOuput> => {
         throw new NotFoundException("User", id.toString());
     }
     return user;
-}
+};
 
 export const emailRegistered = async (email: string): Promise<boolean> => {
     const user = await User.findOne({
         where: { email }
     });
     return !!user;
-}
-
+};
