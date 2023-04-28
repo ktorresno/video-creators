@@ -3,10 +3,10 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { UniqueConstraintError } from 'sequelize';
 
 import  HttpException, { HttpCode } from '../../exceptions/HttpException';
-import NotFoundException from '../../exceptions/NotFoundException';
 import UniqueConstrainException from '../../exceptions/UniqueConstrainException';
 import { CreateVideoDTO, FilterVideosDTO, UpdateVideoDTO } from '../dto/video.dto';
 import * as videoController from '../controllers/video';
+import { controlledException } from '../../utils/catchErrors';
 
 const videosRouter = Router();
 
@@ -18,15 +18,7 @@ videosRouter.get('/:id', async(req: Request, res: Response, next: NextFunction) 
 
     return res.status(HttpCode.OK).send(result);
   } catch (error) {
-    if (error == "Error\: not found") {
-      next(new NotFoundException("Video", id.toString()));
-    } else {
-      next(
-        new HttpException(
-            HttpCode.INTERNAL_SERVER_ERROR,
-            "" + error
-      ));
-    }
+    next(controlledException(error));
   }
 });
 
@@ -39,19 +31,10 @@ videosRouter.put('/:id', async(req: Request, res: Response, next: NextFunction) 
 
     return res.status(HttpCode.SAVED).send(result);
   } catch (error) {
-
     if (error instanceof UniqueConstraintError) {
-      next(
-        new UniqueConstrainException("Video", "url")
-      );
-    } else if (error instanceof HttpException || error instanceof NotFoundException) {
-      next(error);
+      next(new UniqueConstrainException("Video", "url"));
     } else {
-      next(
-        new HttpException(
-            HttpCode.INTERNAL_SERVER_ERROR,
-            "" + error
-      ));
+      next(controlledException(error));
     }
   }
 });
@@ -62,7 +45,7 @@ videosRouter.patch('/:id', async(req: Request, res: Response, next: NextFunction
     const payload: UpdateVideoDTO = req.body;
     // Validate that published flag is present in the request.
     if (payload.published === undefined)
-      next(new HttpException(HttpCode.BAD_REQUEST, 'Missing [published] flag in the request.'));
+      throw new HttpException(HttpCode.BAD_REQUEST, 'Missing [published] flag in the request.');
 
     const result = await videoController.updatePublishedFlag(id, payload);
 
@@ -70,14 +53,8 @@ videosRouter.patch('/:id', async(req: Request, res: Response, next: NextFunction
   } catch (error) {
     if (error instanceof UniqueConstraintError)
       next(new UniqueConstrainException("Video", "url"));
-    else if (error instanceof HttpException) // Controlled Exceptions
-      next(error);
     else
-      next(
-        new HttpException(
-              HttpCode.INTERNAL_SERVER_ERROR,
-              "" + error
-      ));
+      next(controlledException(error));
   }
 });
 
@@ -89,17 +66,10 @@ videosRouter.post('/', async(req: Request, res: Response, next: NextFunction) =>
 
     return res.status(HttpCode.SAVED).send(result)
   } catch (error) {
-
     if (error instanceof UniqueConstraintError)
       next(new UniqueConstrainException("Video", "url"));
-    else if (error instanceof HttpException) // Controlled Exceptions
-      next(error);
     else
-      next(
-        new HttpException(
-              HttpCode.INTERNAL_SERVER_ERROR,
-              "" + error
-      ));
+      next(controlledException(error));
   }
 });
 
@@ -111,11 +81,7 @@ videosRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
 
     return res.status(HttpCode.OK).send(results);
   } catch (error) {
-    next(
-      new HttpException(
-            HttpCode.INTERNAL_SERVER_ERROR,
-            "" + error
-    ));
+    next(controlledException(error));
   }
 });
 
@@ -129,15 +95,7 @@ videosRouter.delete('/:id', async (req: Request, res: Response, next: NextFuncti
         success: result
     });
   } catch (error) {
-    if (error == "Error\: not found") {
-      next(new NotFoundException("Video", id.toString()));
-    } else {
-      next(
-      new HttpException(
-            HttpCode.INTERNAL_SERVER_ERROR,
-            "" + error
-      ));
-    }
+    next(controlledException(error));
   }
 });
 
