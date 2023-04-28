@@ -1,9 +1,9 @@
-interface ListFilters {
+type ListFilters = {
     isDeleted?: boolean;
     includeDeleted?: boolean;
 }
-export interface GetAllVideosFilters extends ListFilters {};
-export interface GetAllReviewsFilters extends ListFilters {
+export type GetAllVideosFilters = ListFilters;
+export type GetAllReviewsFilters = ListFilters & {
     isPublished?: boolean
     isNotPublished?: boolean
 }
