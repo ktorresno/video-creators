@@ -1,7 +1,7 @@
 import HttpException, { HttpCode } from "../exceptions/HttpException";
 
 export const controlledException = (errorType: any): HttpException => {
-    if (errorType instanceof HttpException) { 
+    if (errorType instanceof HttpException) {
         // Controlled Exceptions
         return(errorType);
     } else {
@@ -9,6 +9,5 @@ export const controlledException = (errorType: any): HttpException => {
             HttpCode.INTERNAL_SERVER_ERROR,
             "" + errorType
         );
-        
     }
 }

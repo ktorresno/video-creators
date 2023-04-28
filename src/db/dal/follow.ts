@@ -61,7 +61,7 @@ export const unFollowFlag = async (payload: FollowCreatorInput): Promise<FollowC
                 return updated;
             }
         } else {
-            throw new NotFoundException("'following relation' between these creators to unfollow", 
+            throw new NotFoundException("'following relation' between these creators to unfollow",
             `Following: ${payload.followedCreatorId.toString()} | Follower: ${payload.followerCreatorId.toString()}`);
         }
         // The follower already unfollows the creator specified.

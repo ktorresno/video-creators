@@ -43,14 +43,5 @@ export const usersData = [
   }, {
     followedCreatorId: 3,
     followerCreatorId: 2
-  }, {
-    followedCreatorId: 4,
-    followerCreatorId: 2
-  }, {
-    followedCreatorId: 1,
-    followerCreatorId: 3
-  }, {
-    followedCreatorId: 4,
-    followerCreatorId: 3
-  },
+  }
 ];

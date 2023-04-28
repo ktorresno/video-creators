@@ -50,14 +50,5 @@ export const likedVideosData = [
   }, {
     creatorId: 3,
     videoId: 3
-  },{
-    creatorId: 4,
-    videoId: 3
-  },{
-    creatorId: 1,
-    videoId: 4
-  },{
-    creatorId: 2,
-    videoId: 4
-  }
+  },
 ];
