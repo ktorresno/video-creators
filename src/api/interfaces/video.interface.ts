@@ -14,9 +14,9 @@ export interface VideoAttributes extends Video {
     deletedAt?: Date;
 };
 
-export interface VideoInput extends Optional<VideoAttributes, 'id'> {};
+export type VideoInput = Optional<VideoAttributes, 'id'>;
 
-export interface VideoOuput extends Required<VideoAttributes> {};
+export type VideoOuput = Required<VideoAttributes>;
 
 export interface LikeInteraction {
     id: number;
@@ -24,6 +24,6 @@ export interface LikeInteraction {
     videoId: number;
 };
 
-export interface LikeInteractionAttributes extends LikeInteraction {};
+export type LikeInteractionAttributes = LikeInteraction;
 
 export type LikeInteractionInput = Optional<LikeInteractionAttributes, 'id'>;

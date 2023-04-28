@@ -20,9 +20,9 @@ export interface UserAttributes extends User {
     deletedAt?: Date;
 };
 
-export interface UserInput extends Optional<UserAttributes, 'id'> {};
+export type UserInput = Optional<UserAttributes, 'id'>;
 
-export interface UserOuput extends Required<UserAttributes> {};
+export type UserOuput = Required<UserAttributes>;
 
 export interface FollowCreator {
     id: number;
@@ -31,8 +31,8 @@ export interface FollowCreator {
     active?: boolean;
 };
 
-export interface FollowCreatorAttributes extends FollowCreator {};
+export type FollowCreatorAttributes = FollowCreator;
 
-export interface FollowCreatorInput extends Optional<FollowCreatorAttributes, 'id' | 'active'> {};
+export type FollowCreatorInput = Optional<FollowCreatorAttributes, 'id' | 'active'>;
 
-export interface FollowCreatorOutput extends Required<FollowCreatorAttributes> {};
+export type FollowCreatorOutput = Required<FollowCreatorAttributes>;
